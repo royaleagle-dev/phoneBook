@@ -1,0 +1,157 @@
+{%extends 'contact/base.html'%}
+
+{%block content%}
+<div class = "w3-bar w3-black fixed-top">
+	<button class = "w3-bar-item w3-button" id = "clickContact">Contacts</button>
+	<button class = "w3-bar-item w3-button" id = "clickAdd" data-toggle = "modal" data-target = "#addContact" data-backdrop = 'false'>Add +</button>
+	<button class = "w3-bar-item w3-button w3-right" id = "clickExtras">Extras</button>
+</div>
+
+<div class = "row mt-5">
+
+	<div class = "col-md-8 offset-md-2">
+		<div>
+			{% if messages %}
+			{% for message in messages %}
+    			<p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+    		{% endfor %}
+			{% endif %}
+		</div>
+
+		<div class = "contactSection w3-card-2" id = "contact" style = "height:700px;overflow-y:auto">
+			{%if contacts.allContact%}
+			{%for item in contacts.allContact%}
+				<div class = "w3-panel w3-light-grey p-3">
+					<div class = "row">
+						<div class = "col-md-6">
+							<h5>{{item.first_name}} {{item.last_name}}</h5>
+							<h6>{{item.phone}}</h6>
+						</div>
+						
+						<div class = "col-md-6 text-right">
+							<h5 class = "">Address:</h5>
+							<h6>{{item.address}}</h6>
+						</div>
+					</div>
+					<hr class = "w3-border-light-blue w3-bottombar">
+					<button class = "btn btn-info">Call</button>
+					<button class = "btn btn-info">Message</button>
+					<form style = "display:inline;"method = "get" action = "{%url 'contact:editContact'%}">
+						<input type = "hidden" value = "{{item.id}}" name = "id">
+						<button type = "submit" class = "btn btn-success">Edit</button>
+					</form>
+					<a href = "{%url 'contact:delete' item.id%}" class = "btn btn-danger">Delete</a>
+				</div>
+			{%endfor%}
+			{%else%}
+			<p class = "text-danger">You do not have any contacts yet</p>
+			{%endif%}
+		</div>
+
+		<div class = "modal fade" id = "addContact">
+			<div class = "modal-dialog modal-dialog-centered">
+				<div class = "modal-content w3-card-4">
+					<div class = "modal-header">
+						<h4 class = "modal-title">Add New Contact</h4>
+						<button type = "button" class = "close" data-dismiss = "modal">&times;</button>
+					</div>
+					<div class = "modal-body">
+						<form class = "w3-padding-16 addForm" method = "post" action = "{%url 'contact:addContact'%}">
+							{%csrf_token%}
+							<input type = "text" name = "first_name" class = "form-control" placeholder = "First Name" required>
+							<br>
+							<input type = "text" name = "last_name" class = "form-control" placeholder = "Last Name" required>
+							<br>
+							<input type = "text" name = "address" class = "form-control" placeholder = "Address" required>
+							<br>
+							<input type = "text" name = "phone" class = "form-control" placeholder = "Phone Number" required>
+							<br>
+							<button type = "submit" class = "btn btn-block btn-info">Add Contact
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class = "modal fade" id = "editContact">
+			<div class = "modal-dialog modal-dialog-centered">
+				<div class = "modal-content w3-card-4">
+					<div class = "modal-header">
+						<h4 class = "modal-title">Add New Contact</h4>
+						<button type = "button" class = "close" data-dismiss = "modal">&times;</button>
+					</div>
+					<div class = "modal-body">
+						<form class = "w3-padding-16 addForm" method = "post" action = "{%url 'contact:addContact'%}">
+							{%csrf_token%}
+							<input type = "text" name = "first_name" class = "form-control" placeholder = "First Name" required id = "editfName">
+							<br>
+							<input type = "text" name = "last_name" class = "form-control" placeholder = "Last Name" required id = "editlName">
+							<br>
+							<input type = "text" name = "address" class = "form-control" placeholder = "Address" required id = "editaD">
+							<br>
+							<input type = "text" name = "phone" class = "form-control" placeholder = "Phone Number" required id = "editpH">
+							<br>
+							<button type = "submit" class = "btn btn-block btn-info">Add Contact
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class = "contactSection" id = "extras" style = "display:none;">
+			whassup
+		</div>
+	</div>
+</div>
+
+{%endblock%}
+
+{%block javascript%}
+<script>
+	function openTab(elemId, className){
+		var elements = document.getElementsByClassName(className);
+
+		for (var i =0; i<elements.length; i++){
+			elements[i].style.display = 'none'
+		}
+
+		document.getElementById(elemId).style.display = 'block'
+	}
+</script>
+
+<script>
+	$('#clickContact').click(function(){
+		openTab('contact', 'contactSection')
+	})
+	$('#clickExtras').click(function(){
+		openTab('extras', 'contactSection');
+	})
+
+	$('.addForm').submit(function(event){
+		$('.message').css({
+			'padding': '10px',
+		})
+		$('.message').show('fast').fadeOut(2000);
+
+	})
+</script>
+<script>
+function openEdit(elemId){
+	var elemArray = []
+	var idString = elemId.replace('contactEdit', '')
+	console.log(idString)
+	var displays = document.getElementsByClassName('contactDisplay')
+	console.log(displays)
+	for (var i=0; i<displays.length; i++){
+
+		if (){
+			elemArray.push(displays[i]);
+		}
+	}
+	console.log(elemArray);
+}
+</script>
+{%endblock%}

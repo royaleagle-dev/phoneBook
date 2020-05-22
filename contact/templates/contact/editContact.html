@@ -1,0 +1,27 @@
+{%extends "contact/base.html"%}
+
+{%block content%}
+<div class = "row mt-5 justify-content-center">
+	<div class = "col-md-6">
+		<div class = "w3-white w3-panel w3-round-xxlarge w3-card-2">
+			<form style = "padding:10px;" method = 'POST'>
+				{%csrf_token%}
+				<br>
+				<input type = "text" value = "{{contact.first_name}}" name = "first_name" class = "form-control">
+				<br>
+				<input type = "text" value = "{{contact.last_name}}" name = "last_name" class = "form-control">
+				<br>
+				<input type = "text" value = "{{contact.address}}" name = "address" class = "form-control">
+				<br>
+				<input type = "text" value = "{{contact.phone}}" name = "phone" class = "form-control">
+				<br>
+				<input type = "submit" value = "Update" class = "btn btn-primary btn-block">
+				<br>
+			</form>
+		</div>
+	</div>
+</div>
+{%endblock%}
+
+{%block javascript%}
+{%endblock%}
