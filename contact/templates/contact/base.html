@@ -12,6 +12,14 @@
 		<link rel = "stylesheet" href = "{%static 'css/style.css'%}">
 	</head>
 	<body>
+
+
+<div class="preloader-wrapper">
+    <div class="preloader">
+        <img src="{%static 'css/loader.gif'%}" alt="NILA">
+    </div>
+</div>
+
 		<div class = "container-fluid" id = "major">
 			<div class = "row">
 				<div class = "col">
@@ -28,6 +36,18 @@
 		<script src = "{%static ''%}"></script>
 
 		<script>
+
+			$(document).ready(function($) {
+    			var Body = $('body');
+    			Body.addClass('preloader-site');
+			});
+
+			window.onload = function(){
+				var body = $('body');
+				$(".preloader-wrapper").fadeOut();
+				body.removeClass('preloader-site');
+			}
+
 
 			$('#major').css({
 				'height': $(window).height(),
