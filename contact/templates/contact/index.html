@@ -18,12 +18,12 @@
 			{% endif %}
 		</div>
 
-		<div class = "contactSection w3-card-2" id = "contact" style = "height:700px;overflow-y:auto">
+		<div class = "contactSection w3-card-2" id = "contact" style = "height:550px;overflow:none">
 			<div class = "row">
 				<div class = "col-md-4">
 					{%if contacts.allContact%}
 						{%for item in contacts.allContact%}
-							<div class = "w3-panel w3-light-grey p-3 m-3">
+							<div class = "w3-panel w3-light-grey p-3 m-3 click" id = "contact{{item.id}}" onclick = "openContact('contact{{item.id}}')" data-phone = "{{item.phone}}" data-address = "{{item.address}}">
 								<h5>{{item.first_name}} {{item.last_name}}</h5>
 							</div>
 						{%endfor%}
@@ -32,65 +32,45 @@
 					{%endif%}
 				</div>
 
-				<div class = "col-md-8 w3-light-grey" align = "center">
-				</div>
-			</div>
-
-		<div class = "modal fade" id = "addContact">
-			<div class = "modal-dialog modal-dialog-centered">
-				<div class = "modal-content w3-card-4">
-					<div class = "modal-header">
-						<h4 class = "modal-title">Add New Contact</h4>
-						<button type = "button" class = "close" data-dismiss = "modal">&times;</button>
-					</div>
-					<div class = "modal-body">
-						<form class = "w3-padding-16 addForm" method = "post" action = "{%url 'contact:addContact'%}">
-							{%csrf_token%}
-							<input type = "text" name = "first_name" class = "form-control" placeholder = "First Name" required>
-							<br>
-							<input type = "text" name = "last_name" class = "form-control" placeholder = "Last Name" required>
-							<br>
-							<input type = "text" name = "address" class = "form-control" placeholder = "Address" required>
-							<br>
-							<input type = "text" name = "phone" class = "form-control" placeholder = "Phone Number" required>
-							<br>
-							<button type = "submit" class = "btn btn-block btn-info">Add Contact
-							</button>
-						</form>
+				<div class = "col-md-7 w3-light-grey m-3" align = "center">
+					<div style = "padding:10px;">
+						<h3 id = "contactName"></h3>
+						<hr class = "w3-border w3-border-black w3-bottombar">
+						<div align = "left">
+							<p id = "phone"></p>
+							<p id = "address"></p>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class = "modal fade" id = "editContact">
-			<div class = "modal-dialog modal-dialog-centered">
-				<div class = "modal-content w3-card-4">
-					<div class = "modal-header">
-						<h4 class = "modal-title">Add New Contact</h4>
-						<button type = "button" class = "close" data-dismiss = "modal">&times;</button>
-					</div>
-					<div class = "modal-body">
-						<form class = "w3-padding-16 addForm" method = "post" action = "{%url 'contact:addContact'%}">
-							{%csrf_token%}
-							<input type = "text" name = "first_name" class = "form-control" placeholder = "First Name" required id = "editfName">
-							<br>
-							<input type = "text" name = "last_name" class = "form-control" placeholder = "Last Name" required id = "editlName">
-							<br>
-							<input type = "text" name = "address" class = "form-control" placeholder = "Address" required id = "editaD">
-							<br>
-							<input type = "text" name = "phone" class = "form-control" placeholder = "Phone Number" required id = "editpH">
-							<br>
-							<button type = "submit" class = "btn btn-block btn-info">Add Contact
-							</button>
-						</form>
-					</div>
-				</div>
+	</div>
+</div>
+
+<div class = "modal fade" id = "addContact">
+	<div class = "modal-dialog modal-dialog-centered">
+		<div class = "modal-content w3-card-4">
+			<div class = "modal-header">
+				<h4 class = "modal-title">Add New Contact</h4>
+				<button type = "button" class = "close" data-dismiss = "modal">&times;</button>
 			</div>
-		</div>
-
-
-		<div class = "contactSection" id = "extras" style = "display:none;">
-			whassup
+			
+			<div class = "modal-body">
+				<form class = "w3-padding-16 addForm" method = "post" action = "{%url 'contact:addContact'%}">
+					{%csrf_token%}
+					<input type = "text" name = "first_name" class = "form-control" placeholder = "First Name" required>
+					<br>
+					<input type = "text" name = "last_name" class = "form-control" placeholder = "Last Name" required>
+					<br>
+					<input type = "text" name = "address" class = "form-control" placeholder = "Address" required>
+					<br>
+					<input type = "text" name = "phone" class = "form-control" placeholder = "Phone Number" required>
+					<br>
+					<button type = "submit" class = "btn btn-block btn-info">Add Contact
+					</button>
+					</form>
+			</div>
 		</div>
 	</div>
 </div>
@@ -107,6 +87,18 @@
 		}
 
 		document.getElementById(elemId).style.display = 'block'
+	}
+
+	function openContact(elemId){
+		const element = document.getElementById(elemId);
+		const contactName = document.querySelector("#contactName");
+		const phone = element.dataset.phone;
+		const address = element.dataset.address;
+		contactName.textContent = element.textContent
+		const phoneDisplay = document.querySelector("#phone");
+		const addressDisplay = document.querySelector("#address");
+		phoneDisplay.textContent = phone;
+		addressDisplay.textContent = address;
 	}
 </script>
 
@@ -125,21 +117,5 @@
 		$('.message').show('fast').fadeOut(2000);
 
 	})
-</script>
-<script>
-function openEdit(elemId){
-	var elemArray = []
-	var idString = elemId.replace('contactEdit', '')
-	console.log(idString)
-	var displays = document.getElementsByClassName('contactDisplay')
-	console.log(displays)
-	for (var i=0; i<displays.length; i++){
-
-		//if (){
-		//	elemArray.push(displays[i]);
-		//}
-	}
-	console.log(elemArray);
-}
 </script>
 {%endblock%}
