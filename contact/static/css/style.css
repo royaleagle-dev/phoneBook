@@ -36,3 +36,15 @@ body.preloader-site {
 .click:hover{
     cursor:pointer;
 }
+
+-webkit-scrollbar{
+    background:transparent;
+    width:0;
+}
+
+input[name="searchTerm"]{
+    border:none;
+    outline:none;
+    text-indent:20px;
+
+}

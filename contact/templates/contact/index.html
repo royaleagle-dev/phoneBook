@@ -18,9 +18,13 @@
 			{% endif %}
 		</div>
 
-		<div class = "contactSection w3-card-2" id = "contact" style = "height:550px;overflow:none">
-			<div class = "row">
-				<div class = "col-md-4">
+		<div class = "contactSection w3-card-2" id = "contact" style = "height:550px;width:auto;">
+			<div class = "row mt-4" style = "">
+				<div class = "col-md-4" style = "height:500px;overflow-y:auto;">
+					<div style = "padding:10px;border-bottom:2px solid black">
+						<span class = "fas fa-search"></span>
+						<input type = "text" class = "" name = "searchTerm" style = "display:inline;">
+					</div>
 					{%if contacts.allContact%}
 						{%for item in contacts.allContact%}
 							<div class = "w3-panel w3-light-grey p-3 m-3 click" id = "contact{{item.id}}" onclick = "openContact('contact{{item.id}}')" data-phone = "{{item.phone}}" data-address = "{{item.address}}">
@@ -32,13 +36,26 @@
 					{%endif%}
 				</div>
 
-				<div class = "col-md-7 w3-light-grey m-3" align = "center">
+				<div class = "col-md-7 w3-light-grey m-3" align = "center" id = "infoCenter">
 					<div style = "padding:10px;">
 						<h3 id = "contactName"></h3>
 						<hr class = "w3-border w3-border-black w3-bottombar">
 						<div align = "left">
-							<p id = "phone"></p>
-							<p id = "address"></p>
+							<div>
+								<span class = "fas fa-phone" style = "margin-right:10px;"></span>
+								<p id = "phone" style = "display:inline;"></p>
+							</div>
+							<hr>
+							<div>
+								<span class = "fas fa-home" style = "margin-right:10px;"></span>
+								<p id = "address" style = "display:inline;s"></p>
+							</div>
+							<hr>
+						</div>
+
+						<div style = "margin-top:50%;background-color:black;padding:15px;">
+							<a href = "" class = "btn btn-secondary" id = "phoneBtn"><span class = "fas fa-phone-square"></span> Call Now</a>
+							<a href = "" class = "btn btn-secondary" id = "msgBtn"><span class = "fas fa-envelope-open-text"></span> Message</a>
 						</div>
 					</div>
 				</div>
@@ -90,19 +107,23 @@
 	}
 
 	function openContact(elemId){
+		$('#infoCenter').show('fast');
 		const element = document.getElementById(elemId);
 		const contactName = document.querySelector("#contactName");
 		const phone = element.dataset.phone;
 		const address = element.dataset.address;
+		const phoneBtn = document.getElementById("phoneBtn");
 		contactName.textContent = element.textContent
 		const phoneDisplay = document.querySelector("#phone");
 		const addressDisplay = document.querySelector("#address");
 		phoneDisplay.textContent = phone;
+		phoneBtn.setAttribute('href', `tel://${phone}`);
 		addressDisplay.textContent = address;
 	}
 </script>
 
 <script>
+	$('#infoCenter').hide('fast')
 	$('#clickContact').click(function(){
 		openTab('contact', 'contactSection')
 	})
