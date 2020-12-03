@@ -1,5 +1,5 @@
 {%extends 'contact/base.html'%}
-
+{%load static%}
 {%block content%}
 <div class = "w3-bar w3-black fixed-top">
 	<button class = "w3-bar-item w3-button" id = "clickContact">Contacts</button>
@@ -18,17 +18,16 @@
 			{% endif %}
 		</div>
 
-		<div class = "contactSection w3-card-2" id = "contact" style = "height:550px;width:auto;">
-			<div class = "row mt-4" style = "">
-				<div class = "col-md-4" style = "height:500px;overflow-y:auto;">
-					<div style = "padding:10px;border-bottom:2px solid black">
-						<span class = "fas fa-search"></span>
-						<input type = "text" class = "" name = "searchTerm" style = "display:inline;">
+		<div class = "contactSection w3-card-2" id = "contact">
+			<div class = "row mt-4">
+				<div class = "col-md-4">
+					<div id = "searchBox">
+						<span class = "fas fa-search"></span>: <input type = "text" class = "inlineDisplay" name = "searchTerm">
 					</div>
 					{%if contacts.allContact%}
 						{%for item in contacts.allContact%}
 							<div class = "w3-panel w3-light-grey p-3 m-3 click" id = "contact{{item.id}}" onclick = "openContact('contact{{item.id}}')" data-phone = "{{item.phone}}" data-address = "{{item.address}}">
-								<h5>{{item.first_name}} {{item.last_name}}</h5>
+								<h6>{{item.first_name}} {{item.last_name}}</h6>
 							</div>
 						{%endfor%}
 					{%else%}
@@ -37,23 +36,23 @@
 				</div>
 
 				<div class = "col-md-7 w3-light-grey m-3" align = "center" id = "infoCenter">
-					<div style = "padding:10px;">
+					<div>
 						<h3 id = "contactName"></h3>
 						<hr class = "w3-border w3-border-black w3-bottombar">
 						<div align = "left">
 							<div>
-								<span class = "fas fa-phone" style = "margin-right:10px;"></span>
-								<p id = "phone" style = "display:inline;"></p>
+								<span class = "fas fa-phone iconAdj"></span>
+								<p id = "phone" class = "inlineDisplay"></p>
 							</div>
 							<hr>
 							<div>
-								<span class = "fas fa-home" style = "margin-right:10px;"></span>
-								<p id = "address" style = "display:inline;s"></p>
+								<span class = "fas fa-home iconAdj"></span>
+								<p id = "address" class = "inlineDisplay"></p>
 							</div>
 							<hr>
 						</div>
 
-						<div style = "margin-top:50%;background-color:black;padding:15px;">
+						<div class = "contactFoot">
 							<a href = "" class = "btn btn-secondary" id = "phoneBtn"><span class = "fas fa-phone-square"></span> Call Now</a>
 							<a href = "" class = "btn btn-secondary" id = "msgBtn"><span class = "fas fa-envelope-open-text"></span> Message</a>
 						</div>
@@ -95,48 +94,6 @@
 {%endblock%}
 
 {%block javascript%}
-<script>
-	function openTab(elemId, className){
-		var elements = document.getElementsByClassName(className);
+<script src = "{%static 'js/custom.js'%}"></script>
 
-		for (var i =0; i<elements.length; i++){
-			elements[i].style.display = 'none'
-		}
-
-		document.getElementById(elemId).style.display = 'block'
-	}
-
-	function openContact(elemId){
-		$('#infoCenter').show('fast');
-		const element = document.getElementById(elemId);
-		const contactName = document.querySelector("#contactName");
-		const phone = element.dataset.phone;
-		const address = element.dataset.address;
-		const phoneBtn = document.getElementById("phoneBtn");
-		contactName.textContent = element.textContent
-		const phoneDisplay = document.querySelector("#phone");
-		const addressDisplay = document.querySelector("#address");
-		phoneDisplay.textContent = phone;
-		phoneBtn.setAttribute('href', `tel://${phone}`);
-		addressDisplay.textContent = address;
-	}
-</script>
-
-<script>
-	$('#infoCenter').hide('fast')
-	$('#clickContact').click(function(){
-		openTab('contact', 'contactSection')
-	})
-	$('#clickExtras').click(function(){
-		openTab('extras', 'contactSection');
-	})
-
-	$('.addForm').submit(function(event){
-		$('.message').css({
-			'padding': '10px',
-		})
-		$('.message').show('fast').fadeOut(2000);
-
-	})
-</script>
 {%endblock%}

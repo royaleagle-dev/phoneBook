@@ -3,6 +3,7 @@ from contact.models import Contact
 from django.urls import reverse
 
 class ContactTestCase(TestCase):
+	
 	def setUp(self):
 		Contact.objects.create(first_name = 'Ayotunde', last_name = "Okunubi", address = "Any address", phone = "09086746433")
 
@@ -25,7 +26,7 @@ class ContactListViewTests(TestCase):
 		contact1 = Contact.objects.create(first_name = 'Ayotunde', last_name = "Okunubi", address = "Any address", phone = "09086746433")	
 		contact1 = Contact.objects.create(first_name = 'Anuoluwapo', last_name = "Okunubi", address = "Any address", phone = "09084546433")
 		response = self.client.get(reverse('contact:index'))
-		self.assertQuerysetEqual(response.context['contacts']['allContact'], ['<Contact: Ayotunde>', '<Contact: Anuoluwapo>'])
+		self.assertQuerysetEqual(response.context['contacts']['allContact'], ['<Contact: Anuoluwapo>', '<Contact: Ayotunde>'])
 
 	def test_displaySIngleContact(self):
 		contact1 = Contact.objects.create(first_name = 'Ayotunde', last_name = "Okunubi", address = "Any address", phone = "09086746433")	
@@ -36,9 +37,7 @@ class AddContactTest(TestCase):
 
 	def test_postDataWorking(self):
 		response = self.client.post(reverse('contact:addContact'), {'first_name':'Ayotunde', 'last_name':'Okunubi', 'address':'56, Okun Street', 'phone':'09087678564'})
-		self.assertEqual(response.status_code, 200)
-
-		self.assertEqual(response.status_code, 200)
+		self.assertEqual(response.status_code, 302)
 
 
 

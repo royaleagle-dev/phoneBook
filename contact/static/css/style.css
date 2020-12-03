@@ -43,8 +43,50 @@ body.preloader-site {
 }
 
 input[name="searchTerm"]{
-    border:none;
+    width:80%;
     outline:none;
-    text-indent:20px;
+    border:none;
+    background-color:lightgrey;
+    color:black;
+    padding:6.5px;
 
+}
+
+.contactSection{
+    height:500px;
+    width:auto;
+}
+
+.contactSection .row .col-md-4{
+    height:500px;
+    overflow-y:auto;
+}
+
+#searchBox{
+    padding:10px;
+    border-bottom: 2px solid black;
+    /*position:fixed;*/
+}
+
+.inlineDisplay{
+    display:inline;
+}
+
+#infoCenter div{
+    padding:10px;
+}
+
+#infoCenter{
+    overflow-y:auto;
+    height:450px;
+}
+
+.iconAdj{
+    margin-right:10px;
+}
+
+.contactFoot{
+    margin-top:20%;
+    background-color:black;
+    padding:15px;
 }
